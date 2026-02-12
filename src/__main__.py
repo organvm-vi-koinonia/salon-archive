@@ -12,7 +12,6 @@ import json
 import sys
 
 from .sessions import SalonSession, SessionArchive
-from .taxonomy import Taxonomy, TaxonomyNode
 from .transcription import TranscriptionPipeline
 
 
