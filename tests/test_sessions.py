@@ -104,3 +104,19 @@ class TestSessionArchive:
         archive = SessionArchive()
         with pytest.raises(KeyError):
             archive.get_session("MISSING")
+
+    def test_search_by_date_range(self):
+        archive = SessionArchive()
+        archive.add_session(_make_session("S001", date=datetime(2026, 1, 1)))
+        archive.add_session(_make_session("S002", date=datetime(2026, 2, 1)))
+        archive.add_session(_make_session("S003", date=datetime(2026, 3, 1)))
+        results = archive.search_by_date_range(datetime(2026, 1, 15), datetime(2026, 2, 15))
+        assert len(results) == 1
+        assert results[0].session_id == "S002"
+
+    def test_update_session(self):
+        archive = SessionArchive()
+        archive.add_session(_make_session("S001", title="Original"))
+        updated = archive.update_session("S001", title="Updated Title")
+        assert updated.title == "Updated Title"
+        assert archive.get_session("S001").title == "Updated Title"

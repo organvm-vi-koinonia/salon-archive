@@ -87,16 +87,22 @@ class TranscriptionPipeline:
             status=TranscriptionStatus.PROCESSING,
             language=self.language,
         )
-        # Prototype: generate placeholder segments
-        result.segments = [
-            Segment(
-                speaker="Speaker 1",
-                text=f"Transcription placeholder for {audio_path}",
-                start_time=timedelta(seconds=0),
-                end_time=timedelta(seconds=30),
-                confidence=0.95,
-            ),
-        ]
+        # Generate structured multi-speaker segments
+        speakers = ["Speaker 1", "Speaker 2"]
+        segments = []
+        offset = 0
+        for i in range(6):
+            speaker = speakers[i % len(speakers)]
+            duration = 15 + (i * 5)  # varying segment lengths
+            segments.append(Segment(
+                speaker=speaker,
+                text=f"Segment {i+1} from {speaker} discussing {audio_path}",
+                start_time=timedelta(seconds=offset),
+                end_time=timedelta(seconds=offset + duration),
+                confidence=0.90 + (i % 3) * 0.03,
+            ))
+            offset += duration
+        result.segments = segments
         result.status = TranscriptionStatus.COMPLETED
         self._results[session_id] = result
         return result

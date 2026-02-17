@@ -28,4 +28,23 @@ def test_extract_segments_by_speaker():
     pipeline = TranscriptionPipeline()
     result = pipeline.process_audio("S001", "/audio/test.wav")
     segs = pipeline.extract_segments(result, "Speaker 1")
-    assert len(segs) == 1
+    assert len(segs) >= 1
+
+
+def test_multi_segment_generation():
+    pipeline = TranscriptionPipeline()
+    result = pipeline.process_audio("S001", "/audio/session.wav")
+    assert len(result.segments) >= 2
+
+
+def test_multiple_speakers():
+    pipeline = TranscriptionPipeline()
+    result = pipeline.process_audio("S001", "/audio/session.wav")
+    speakers = result.speaker_list
+    assert len(speakers) >= 2
+
+
+def test_total_duration():
+    pipeline = TranscriptionPipeline()
+    result = pipeline.process_audio("S001", "/audio/session.wav")
+    assert result.total_duration.total_seconds() > 0

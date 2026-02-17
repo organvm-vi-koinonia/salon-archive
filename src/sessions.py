@@ -65,6 +65,18 @@ class SessionArchive:
         sorted_sessions = sorted(self._sessions.values(), key=lambda s: s.date, reverse=True)
         return sorted_sessions[:count]
 
+    def search_by_date_range(self, start: datetime, end: datetime) -> list[SalonSession]:
+        """Return sessions within a date range (inclusive)."""
+        return [s for s in self._sessions.values() if start <= s.date <= end]
+
+    def update_session(self, session_id: str, **kwargs) -> SalonSession:
+        """Update fields on an existing session."""
+        session = self._sessions[session_id]
+        for key, value in kwargs.items():
+            if hasattr(session, key):
+                setattr(session, key, value)
+        return session
+
     @property
     def total_sessions(self) -> int:
         return len(self._sessions)
