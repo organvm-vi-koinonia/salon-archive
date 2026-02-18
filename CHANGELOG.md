@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-02-17
+
+### Added
+- Full-text search repository method `search_fulltext()` using PostgreSQL tsvector + `plainto_tsquery`
+- Transcript search method `search_transcripts()` with `ts_headline` highlighted results
+
+### Deprecated
+- `search_by_text()` ILIKE method — use `search_fulltext()` for better performance
+
 ## [0.2.0] - 2026-02-17
 
 ### Added
