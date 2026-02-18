@@ -6,6 +6,7 @@ text transcripts with speaker diarization and segment metadata.
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import timedelta
 from enum import Enum
@@ -65,31 +66,24 @@ class TranscriptionResult:
         return max(seg.end_time for seg in self.segments)
 
 
-class TranscriptionPipeline:
-    """Pipeline for processing audio into structured transcripts."""
+# ── Backends ──────────────────────────────────────────────────────────
 
-    def __init__(self, language: str = "en") -> None:
-        self.language = language
-        self._results: dict[str, TranscriptionResult] = {}
 
-    def process_audio(self, session_id: str, audio_path: str) -> TranscriptionResult:
-        """Process an audio file and generate a transcription.
+class TranscriptionBackend(ABC):
+    """Abstract base for transcription backends."""
 
-        Args:
-            session_id: Unique identifier for the salon session.
-            audio_path: Path to the audio file.
+    @abstractmethod
+    def transcribe(self, audio_path: str) -> list[Segment]:
+        """Convert an audio file to a list of time-aligned segments."""
+        ...
 
-        Returns:
-            TranscriptionResult with placeholder segments.
-        """
-        result = TranscriptionResult(
-            session_id=session_id,
-            status=TranscriptionStatus.PROCESSING,
-            language=self.language,
-        )
-        # Generate structured multi-speaker segments
+
+class MockBackend(TranscriptionBackend):
+    """Returns deterministic mock segments for testing and development."""
+
+    def transcribe(self, audio_path: str) -> list[Segment]:
         speakers = ["Speaker 1", "Speaker 2"]
-        segments = []
+        segments: list[Segment] = []
         offset = 0
         for i in range(6):
             speaker = speakers[i % len(speakers)]
@@ -102,7 +96,47 @@ class TranscriptionPipeline:
                 confidence=0.90 + (i % 3) * 0.03,
             ))
             offset += duration
-        result.segments = segments
+        return segments
+
+
+class WhisperBackend(TranscriptionBackend):
+    """Placeholder for OpenAI Whisper API integration."""
+
+    def transcribe(self, audio_path: str) -> list[Segment]:
+        raise NotImplementedError("Whisper integration not yet configured")
+
+
+# ── Pipeline ──────────────────────────────────────────────────────────
+
+
+class TranscriptionPipeline:
+    """Pipeline for processing audio into structured transcripts."""
+
+    def __init__(
+        self,
+        language: str = "en",
+        backend: TranscriptionBackend | None = None,
+    ) -> None:
+        self.language = language
+        self.backend = backend or MockBackend()
+        self._results: dict[str, TranscriptionResult] = {}
+
+    def process_audio(self, session_id: str, audio_path: str) -> TranscriptionResult:
+        """Process an audio file and generate a transcription.
+
+        Args:
+            session_id: Unique identifier for the salon session.
+            audio_path: Path to the audio file.
+
+        Returns:
+            TranscriptionResult with segments from the configured backend.
+        """
+        result = TranscriptionResult(
+            session_id=session_id,
+            status=TranscriptionStatus.PROCESSING,
+            language=self.language,
+        )
+        result.segments = self.backend.transcribe(audio_path)
         result.status = TranscriptionStatus.COMPLETED
         self._results[session_id] = result
         return result
