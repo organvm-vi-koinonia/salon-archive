@@ -31,6 +31,6 @@ class TestSettings:
         try:
             Settings.DATABASE_URL = "postgresql://localhost/test"
             url = Settings.require_db()
-            assert url == "postgresql://localhost/test"
+            assert url == "postgresql+psycopg://localhost/test"
         finally:
             Settings.DATABASE_URL = original

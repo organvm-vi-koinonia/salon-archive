@@ -1,5 +1,8 @@
 """Sessions module for managing salon session metadata and archives.
 
+DEPRECATED: This in-memory implementation is retained as an offline fallback.
+For database-backed operations, use repository.py with koinonia-db models.
+
 Tracks salon sessions with participants, topics, recordings,
 and cross-references to transcription outputs.
 """

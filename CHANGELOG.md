@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-02-17
+
+### Added
+
+- Database-backed repository (SalonRepository) using koinonia-db models
+- Click CLI with `search`, `export`, `stats`, and `ingest` commands
+- Text search via ILIKE (`search_by_text`) alongside exact tag search
+- `--exact-tag` flag for array-element matching (original behavior)
+
+### Changed
+
+- URL conversion (postgresql→psycopg) moved from repository to config.py
+- Default search uses text matching instead of exact tag match
+
+### Deprecated
+
+- In-memory `SessionArchive` and `Taxonomy` classes (retained as offline fallback)
+
+## [0.1.1] - 2026-02-11
+
 ### Added
 
 - Platinum Sprint: standardized badge row, CHANGELOG
@@ -19,5 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial public release as part of the organvm eight-organ system
 - Core project structure and documentation
 
-[Unreleased]: https://github.com/organvm-vi-koinonia/salon-archive/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/organvm-vi-koinonia/salon-archive/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/organvm-vi-koinonia/salon-archive/compare/v0.1.1...v0.2.0
+[0.1.1]: https://github.com/organvm-vi-koinonia/salon-archive/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/organvm-vi-koinonia/salon-archive/releases/tag/v0.1.0

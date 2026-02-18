@@ -21,13 +21,7 @@ class SalonRepository:
     """Synchronous repository for salon session CRUD against Neon/Postgres."""
 
     def __init__(self, database_url: str) -> None:
-        url = database_url
-        # Ensure we use sync psycopg (v3) driver explicitly.
-        # SQLAlchemy's bare postgresql:// defaults to psycopg2 which is
-        # not installed; the koinonia-db stack ships psycopg (v3).
-        if url.startswith("postgresql://"):
-            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
-        self._engine = create_engine(url)
+        self._engine = create_engine(database_url)
 
     # ── Sessions ──────────────────────────────────────────────────────
 
@@ -83,10 +77,22 @@ class SalonRepository:
             return s.get(SalonSessionRow, session_id)
 
     def search_by_topic(self, topic: str) -> list[SalonSessionRow]:
-        """Find sessions whose organ_tags array contains the given topic."""
+        """Find sessions whose organ_tags array contains the given topic (exact match)."""
         with Session(self._engine) as s:
             stmt = select(SalonSessionRow).where(
                 SalonSessionRow.organ_tags.any(topic)
+            )
+            return list(s.scalars(stmt))
+
+    def search_by_text(self, query: str) -> list[SalonSessionRow]:
+        """Find sessions matching query via ILIKE on title, notes, and organ_tags text."""
+        with Session(self._engine) as s:
+            q = f"%{query}%"
+            from sqlalchemy import cast, String
+            stmt = select(SalonSessionRow).where(
+                SalonSessionRow.title.ilike(q)
+                | SalonSessionRow.notes.ilike(q)
+                | cast(SalonSessionRow.organ_tags, String).ilike(q)
             )
             return list(s.scalars(stmt))
 

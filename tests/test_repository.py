@@ -23,8 +23,9 @@ class TestSalonRepositoryInit:
         repo = SalonRepository("postgresql+psycopg://localhost/test")
         assert repo._engine is not None
 
-    def test_upgrades_bare_postgresql_to_psycopg(self):
-        repo = SalonRepository("postgresql://localhost/test")
+    def test_accepts_preconverted_psycopg_url(self):
+        """Config now handles URL conversion; repository accepts pre-converted URLs."""
+        repo = SalonRepository("postgresql+psycopg://localhost/test")
         url_str = str(repo._engine.url)
         assert "psycopg" in url_str
 

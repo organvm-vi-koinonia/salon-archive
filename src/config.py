@@ -11,7 +11,10 @@ class Settings:
 
     @classmethod
     def require_db(cls) -> str:
-        """Return DATABASE_URL or raise if unset."""
+        """Return DATABASE_URL or raise if unset. Converts to psycopg driver."""
         if not cls.DATABASE_URL:
             raise RuntimeError("DATABASE_URL is not set")
-        return cls.DATABASE_URL
+        url = cls.DATABASE_URL
+        if url.startswith("postgresql://") and "+psycopg" not in url:
+            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+        return url

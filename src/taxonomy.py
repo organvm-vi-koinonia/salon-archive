@@ -1,5 +1,8 @@
 """Taxonomy module for categorizing and tagging salon content.
 
+DEPRECATED: This in-memory implementation is retained as an offline fallback.
+For database-backed operations, use repository.py with koinonia-db models.
+
 Manages a hierarchical taxonomy of topics, themes, and concepts
 used to organize salon sessions and enable cross-session discovery.
 """

@@ -41,10 +41,11 @@ def ingest(audio: str, session_id: str, language: str) -> None:
 
 
 @cli.command()
-@click.option("--topic", default=None, help="Search by topic keyword")
+@click.option("--topic", default=None, help="Search by topic keyword (text search)")
+@click.option("--exact-tag", default=None, help="Search by exact organ_tags array match")
 @click.option("--limit", type=int, default=20, help="Max results")
-def search(topic: str | None, limit: int) -> None:
-    """Search the session archive by topic."""
+def search(topic: str | None, exact_tag: str | None, limit: int) -> None:
+    """Search the session archive by topic or tag."""
     try:
         db_url = Settings.require_db()
     except RuntimeError as exc:
@@ -54,8 +55,10 @@ def search(topic: str | None, limit: int) -> None:
     from .repository import SalonRepository
 
     repo = SalonRepository(db_url)
-    if topic:
-        results = repo.search_by_topic(topic)
+    if exact_tag:
+        results = repo.search_by_topic(exact_tag)
+    elif topic:
+        results = repo.search_by_text(topic)
     else:
         results = repo.list_sessions(limit=limit)
 
