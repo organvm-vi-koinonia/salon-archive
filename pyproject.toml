@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "salon-archive"
-version = "0.2.0"
+version = "0.3.0"
 description = "Transcription pipeline, taxonomy management, and session archival for community salons"
 requires-python = ">=3.11"
 dependencies = [
@@ -17,6 +17,7 @@ dev = ["pytest>=7.0", "ruff>=0.4.0"]
 
 [project.scripts]
 salon = "src.__main__:cli"
+salon-data-export = "src.data_export:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

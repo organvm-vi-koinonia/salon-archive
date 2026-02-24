@@ -1,0 +1,47 @@
+{
+  "session_count": 2,
+  "formats": [
+    "deep_dive",
+    "socratic_dialogue"
+  ],
+  "organ_tags": [
+    "i-recursive-systems",
+    "i-theoria",
+    "ii-ai-collaboration",
+    "ii-poiesis",
+    "iv-taxis",
+    "v-logos"
+  ],
+  "date_range": {
+    "earliest": "2026-02-20T18:00:00Z",
+    "latest": "2026-02-27T18:00:00Z"
+  },
+  "sessions": [
+    {
+      "title": "Recursive Systems as Creative Practice",
+      "date": "2026-02-20T18:00:00Z",
+      "format": "deep_dive",
+      "facilitator": "4444J99",
+      "organ_tags": [
+        "i-theoria",
+        "ii-poiesis",
+        "i-recursive-systems"
+      ],
+      "participant_count": 2,
+      "segment_count": 5
+    },
+    {
+      "title": "The AI-Conductor Model: Human Direction, Machine Volume",
+      "date": "2026-02-27T18:00:00Z",
+      "format": "socratic_dialogue",
+      "facilitator": "4444J99",
+      "organ_tags": [
+        "v-logos",
+        "iv-taxis",
+        "ii-ai-collaboration"
+      ],
+      "participant_count": 2,
+      "segment_count": 5
+    }
+  ]
+}
