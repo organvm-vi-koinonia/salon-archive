@@ -9,8 +9,16 @@ used to organize salon sessions and enable cross-session discovery.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any
+import warnings
+
+warnings.warn(
+    "salon_archive.taxonomy is deprecated — use repository.SalonRepository instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+from dataclasses import dataclass, field  # noqa: E402
+from typing import Any  # noqa: E402
 
 
 @dataclass

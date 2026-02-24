@@ -9,9 +9,17 @@ and cross-references to transcription outputs.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any
+import warnings
+
+warnings.warn(
+    "salon_archive.sessions is deprecated — use repository.SalonRepository instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+from dataclasses import dataclass, field  # noqa: E402
+from datetime import datetime  # noqa: E402
+from typing import Any  # noqa: E402
 
 
 @dataclass

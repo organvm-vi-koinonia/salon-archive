@@ -2,6 +2,8 @@
 
 import os
 
+from koinonia_db.config import require_database_url
+
 
 class Settings:
     """Application settings sourced from environment variables."""
@@ -12,9 +14,4 @@ class Settings:
     @classmethod
     def require_db(cls) -> str:
         """Return DATABASE_URL or raise if unset. Converts to psycopg driver."""
-        if not cls.DATABASE_URL:
-            raise RuntimeError("DATABASE_URL is not set")
-        url = cls.DATABASE_URL
-        if url.startswith("postgresql://") and "+psycopg" not in url:
-            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
-        return url
+        return require_database_url()
