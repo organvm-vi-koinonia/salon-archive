@@ -27,16 +27,13 @@ Archive infrastructure for intellectual salons: transcription pipeline, topic ta
     config.py
     export.py
     repository.py
-    sessions.py
-    taxonomy.py
     transcription.py
 📁 tests/
     __init__.py
     test_config.py
+    test_data_export.py
     test_export.py
     test_repository.py
-    test_sessions.py
-    test_taxonomy.py
     test_transcription.py
   .gitignore
   CHANGELOG.md
