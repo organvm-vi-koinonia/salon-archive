@@ -1,0 +1,8 @@
+schema_version: '1.0'
+repo: salon-archive
+organ: VI
+display_name: 'Archive infrastructure for intellectual salons: transcription pipeline,
+  topic taxonomy, and session metadata aligned with the eight-organ model'
+delivery:
+- platform: web_app
+  status: not_started
