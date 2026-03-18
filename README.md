@@ -259,3 +259,11 @@ For questions about the salon archive, community membership, or session particip
 ---
 
 *ORGAN-VI is the gathering space where the organvm system's ideas are tested, challenged, and extended through shared inquiry. The salon archive ensures that what happens in these gatherings persists, compounds, and feeds back into the system as a whole.*
+
+<!-- SYSTEM-NAV-START -->
+
+---
+
+<sub>[Portfolio](https://4444j99.github.io/portfolio/) · [System Directory](https://4444j99.github.io/portfolio/directory/) · [ORGAN VI · Koinonia](https://organvm-vi-koinonia.github.io/) · Part of the <a href="https://4444j99.github.io/portfolio/directory/">ORGANVM eight-organ system</a></sub>
+
+<!-- SYSTEM-NAV-END -->
