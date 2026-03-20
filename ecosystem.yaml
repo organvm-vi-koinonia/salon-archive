@@ -1,8 +1,25 @@
 schema_version: '1.0'
 repo: salon-archive
 organ: VI
-display_name: 'Archive infrastructure for intellectual salons: transcription pipeline,
-  topic taxonomy, and session metadata aligned with the eight-organ model'
+display_name: "Salon archive — transcription pipeline, topic taxonomy, session metadata"
+
 delivery:
-- platform: web_app
+- platform: python_library
+  status: live
+  priority: high
+  notes: "Transcription pipeline and session indexing"
+  next_action: "Maintain pipeline as salon events are archived"
+
+community:
+- platform: salon_events
+  status: planned
+  priority: critical
+  notes: "Intellectual salons aligned with eight-organ model"
+  next_action: "Schedule and host first salon event"
+
+content:
+- platform: docs_site
   status: not_started
+  priority: medium
+  notes: "Salon format guide, topic taxonomy, transcription methodology"
+  next_action: "Document salon format and facilitation guidelines"
