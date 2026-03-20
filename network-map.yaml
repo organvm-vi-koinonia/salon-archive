@@ -1,0 +1,17 @@
+schema_version: '1.0'
+repo: salon-archive
+organ: ORGAN-VI
+mirrors:
+  technical:
+  - project: pallets/click
+    platform: github
+    relevance: 'Python dependency: click'
+    engagement:
+    - watch
+    tags:
+    - auto-discovered
+    - python-dep
+  parallel: []
+  kinship: []
+ledger: ~/.organvm/network/ledger.jsonl
+last_scanned: '2026-03-20T11:55:26.349226+00:00'
