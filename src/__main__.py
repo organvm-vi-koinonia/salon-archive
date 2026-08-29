@@ -21,7 +21,6 @@ from .transcription import TranscriptionPipeline
 @click.group()
 def cli() -> None:
     """Salon transcription, search, and export toolkit."""
-    pass
 
 
 @cli.command()
@@ -130,7 +129,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     except SystemExit as exc:
         return exc.code if isinstance(exc.code, int) else 1
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - CLI boundary converts unexpected failures to exit codes
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 
