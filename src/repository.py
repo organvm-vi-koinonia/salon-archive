@@ -6,15 +6,16 @@ koinonia-db ORM models from ORGAN-VI.
 
 from __future__ import annotations
 
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
-
 from koinonia_db.models.salon import (
     Participant,
     SalonSessionRow,
-    Segment as SegmentRow,
     TaxonomyNodeRow,
 )
+from koinonia_db.models.salon import (
+    Segment as SegmentRow,
+)
+from sqlalchemy import String, cast, create_engine, select
+from sqlalchemy.orm import Session
 
 
 class SalonRepository:
@@ -80,7 +81,7 @@ class SalonRepository:
         """Find sessions whose organ_tags array contains the given topic (exact match)."""
         with Session(self._engine) as s:
             stmt = select(SalonSessionRow).where(
-                SalonSessionRow.organ_tags.any(topic)
+                SalonSessionRow.organ_tags.contains([topic])
             )
             return list(s.scalars(stmt))
 
@@ -88,7 +89,6 @@ class SalonRepository:
         """Find sessions matching query via ILIKE on title, notes, and organ_tags text."""
         with Session(self._engine) as s:
             q = f"%{query}%"
-            from sqlalchemy import cast, String
             stmt = select(SalonSessionRow).where(
                 SalonSessionRow.title.ilike(q)
                 | SalonSessionRow.notes.ilike(q)
